@@ -2,15 +2,57 @@
 
 “Realizar un método que devuelva si un número es primo o no. El método se debe llamar: esPrimo y devolver verdadero o falso.” 
 “Clase: SmallInteger”
-esPrimo  | primo divisor resto | "self es el numero que viene como parametro" (self <= 1) ifTrue: [  	^false. 	].  divisor:= 2. primo:= true.  " ~= es el signo distinto " [primo & (((self sqrt)) >= divisor)] whileTrue: [  	((self \\ divisor) = 0) ifTrue: [  	  primo:= false. 	]     ifFalse: [      	 divisor:= divisor + 1.   	 ].     ]. ^primo.
+esPrimo
+| primo divisor resto | 
+"self es el numero que viene como parametro" 
+(self <= 1) ifTrue: [ 
+	^false. 
+	].  
+divisor:= 2. 
+primo:= true.  
+" ~= es el signo distinto " 
+[primo & (((self sqrt)) >= divisor)] whileTrue: [  	
+	((self \\ divisor) = 0) ifTrue: [  	  
+		primo:= false. 	
+		]     
+	ifFalse: [      	 
+		divisor:= divisor + 1.   	
+		].     
+	].
+^primo.
+
+
 
 “Realizar un método que devuelva un arreglo de dos (2) elementos donde el elemento uno es la parte entera y el elemento 2 es la parte decimal 
 Ejemplo: 23.44 dividirNumero ----> #(23 44) “
 “Clase: SmallFloat64“ 
-DividirNumero  | nro |  nro:= self asString.  nro:= nro substrings: '.'.  nro at: 1 put: (nro at: 1) asInteger. nro at: 2 put: (nro at: 2) asInteger. ^nro.
+DividirNumero
+| nro |  
+nro:= self asString.  
+nro:= nro substrings: '.'.  
+nro at: 1 put: (nro at: 1) asInteger. 
+nro at: 2 put: (nro at: 2) asInteger. 
+^nro.
+
+
+
 “Dado un arreglo de números encontrar, realizar un método que encuentre el mayor valor y otro método que encuentre el menor valor. “
 “Clase: Array”
-buscoMayor  | mayor |  mayor:= self at: 1. "tomo el primer elemento como mayor" "salteo la primer iteracion" 2 to: (self size) do: [ :i| 	 	((self at: i) isNumber) ifTrue: [  		((self at: i) > mayor) ifTrue: [  			mayor:= self at: i. 			]. 		].  	"si no es un numero, lo saltea" 	]. ^mayor.
+buscoMayor  
+| mayor |  
+mayor:= self at: 1. "tomo el primer elemento como mayor" 
+"salteo la primer iteracion" 
+2 to: (self size) do: [ :i| 	 	
+	((self at: i) isNumber) ifTrue: [  		
+		((self at: i) > mayor) ifTrue: [  			
+			mayor:= self at: i. 			
+			]. 		
+		].  	
+		"si no es un numero, lo saltea" 	
+	]. 
+^mayor.
+
+
 
 
 "CLASE 10/10"
@@ -57,9 +99,13 @@ Transcript show: (lista) ; cr.
 Transcript show: ('La cantidad de elementos de la lista es ', (lista size) asString).
 
 
+
+
 "CLASE 16/10"
 
-Pasar un período expresado en segundos a un período expresado en días, horas, minutos y segundos. 
+"Pasar un período expresado en segundos a un período expresado en días, horas, minutos y segundos." 
+"clase Smallinteger" 
+
 Solucion 1:
 obtenerPeriodo
 
@@ -82,7 +128,6 @@ horas:= 0.
 	horas:= horas + 1.
 	].
 
-
 "convierto los segundos a horas"
 "1 minuto = 60 segundos"
 minutos:= 0.
@@ -92,7 +137,7 @@ minutos:= 0.
 	].
 
 "formo el periodo para poder mostrar"
-periodo:= (dias asString, ' dias ', horas asString, ' horas ', minutos asString, ' minutos ', segundos asString, ' segundos') asString.
+periodo:= (dias asString, ' dias ', horas asString, ' horas ', minutos asString, ' minutos ', segundos asString, ' segundos').
 ^periodo.
 
 
@@ -118,21 +163,21 @@ minutos:= segundos // 60. "obtengo los horas"
 segundos:= segundos \\ 60. "obtengo los segundos para seguir operando"
 
 "formo el periodo para poder mostrar"
-periodo:= (dias asString, ' dias ', horas asString, ' horas ', minutos asString, ' minutos ', segundos asString, ' segundos') asString.
+periodo:= (dias asString, ' dias ', horas asString, ' horas ', minutos asString, ' minutos ', segundos asString, ' segundos').
 ^periodo.
 
 
 
 "Hacer un método que dada una fecha en formato DD/MM/AA, verifique si es correcta o errónea. Ej.: El 31/02/97 es una fecha errónea."
 verificarFecha
-
-| fecha |
-
+| fecha meses año dia mes |
 fecha:= self.
 
 ((fecha size) = 8) ifFalse: [ 
 	^'Fecha ingresada es invalida'.
 	].
+
+"controlo que este bien ingresado el formato DD/MM/AA"
 1 to: (fecha size) do: [ :i|
 	
 	"pregunto por la posicion de la /"
@@ -149,6 +194,7 @@ fecha:= self.
 	"tiene que venir un numero"
 	ifFalse: [ 
 		
+		"convierto el caracter a string y dps a numero"
 		(((fecha at: i) asString asInteger) isInteger) ifFalse: [ 
 			
 			^'Fecha ingresada es invalida'.
@@ -156,6 +202,118 @@ fecha:= self.
 		
 		].
 	
-	]. 
+	].
+
+"controlo que sea un fecha existente"
+
+"en este caso AA todos los años son validos"
+año:= (fecha copyFrom: 7 to: 8) asInteger. "saco el año"
+"pregunto si no es año bisiesto"
+((año \\ 4) = 0) ifTrue: [ 
+	"cada posicion es un mes, con la cantidad de dias"
+	meses:= #[31 29 31 30 31 30 31 31 30 31 30 31].
+	]
+ifFalse: [ 
+	"en febrero reemplazo por 28 en vez de 29"
+	meses:= #[31 28 31 30 31 30 31 31 30 31 30 31].
+	].
+
+mes:= (fecha copyFrom: 4 to: 5) asInteger. "saco el mes"
+(mes > 12) ifTrue: [ 
+	^'Fecha ingresada es invalida'.
+	].
+
+dia:= (fecha copyFrom: 1 to: 2) asInteger. "saco el dia"
+(dia > (meses at: mes)) ifTrue: [ 
+	^'Fecha ingresada es invalida'.
+	].
 
 ^'Fecha ingresada es valida'.
+
+
+
+"Hacer un método que dada una fecha en formato DD/MM/AAAA o DD-MM-AAAA, verifique si es correcta o errónea. Ej.: El 31/02/1997 es una fecha errónea."
+verificarFechaa
+
+| fecha meses año dia mes |
+
+fecha:= self.
+
+((fecha size) = 10) ifFalse: [ 
+	^'Fecha ingresada es invalida, error de longitud'.
+	].
+
+"controlo que este bien ingresado el formato DD/MM/AAAA"
+1 to: (fecha size) do: [ :i|
+	
+	"pregunto por la posicion de la / o -"
+	((i = 3) or: (i = 6)) ifTrue: [ 
+		"pregunta si no es la / o -"
+		(((fecha at: i) ~= $/) and: ((fecha at: i) ~= $-)) ifTrue: [ 
+			^'Fecha ingresada es invalida, error de formato'.
+			].
+		
+		] 
+	"tiene que venir un numero"
+	ifFalse: [ 
+		
+		"convierto el caracter a string y dps a numero"
+		(((fecha at: i) asString asInteger) isInteger) ifFalse: [ 
+			^'Fecha ingresada es invalida, error de formato'.
+			].
+		].
+	
+	].
+
+"controlo que sea un fecha existente"
+
+año:= (fecha copyFrom: 7 to: 10) asInteger. "saco el año"
+(año > 2024) ifTrue: [ 
+	^'Fecha ingresada es invalida, error en el año'.
+	].
+
+"pregunto si no es año bisiesto"
+((año \\ 4) = 0) ifTrue: [ 
+	"cada posicion es un mes, con la cantidad de dias"
+	meses:= #[31 29 31 30 31 30 31 31 30 31 30 31].
+	]
+ifFalse: [ 
+	"en febrero reemplazo por 28 en vez de 29"
+	meses:= #[31 28 31 30 31 30 31 31 30 31 30 31].
+	].
+
+mes:= (fecha copyFrom: 4 to: 5) asInteger. "saco el mes"
+(mes > 12) ifTrue: [ 
+	^'Fecha ingresada es invalida, error en el mes'.
+	].
+
+dia:= (fecha copyFrom: 1 to: 2) asInteger. "saco el dia"
+(dia > (meses at: mes)) ifTrue: [ 
+	^'Fecha ingresada es invalida, error en el dia'.
+	].
+
+^'Fecha ingresada es valida'.
+
+
+
+"Construir un método ‘longitudes’ tal que, dada una lista de cadenas, devuelva una lista de pares 
+ordenados que representen la ubicación de cada cadena y su longitud. Ej.: longitudes [‘este’, ‘es’, 
+‘el’, ‘ejemplo’, ‘sí?’]. Devolverá: [(1,4),(2,2),(3,2),(4,7),(5,3)]       (no pidio el profe este ejercicio)" 
+longitudes
+| arreglo salida |
+
+arreglo:= self.
+
+arreglo do: [ :c| 
+	(c isString) ifFalse: [
+		^'Error, un elemento del arreglo no es un string'.
+		].
+	].
+
+salida:= Array new: (arreglo size).
+1 to: (arreglo size) do: [ :i|
+	
+	salida at: i put: ('(', i asString, ',', ((arreglo at: i) size) asString, ')').
+	].
+
+^salida.
