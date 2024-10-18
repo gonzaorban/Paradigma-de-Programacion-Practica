@@ -2,8 +2,8 @@ TRABAJO PRACTICO 4
 
 "CLASE 09/10"
 
-"Realizar un método que devuelva si un número es primo o no. El método se debe llamar: esPrimo y devolver verdadero o falso.” 
-“Clase: SmallInteger”
+"Realizar un método que devuelva si un número es primo o no. El método se debe llamar: esPrimo y devolver verdadero o falso."
+"Clase: SmallInteger - - mathematical functions"
 esPrimo
 | primo divisor resto | 
 "self es el numero que viene como parametro" 
@@ -122,7 +122,7 @@ Transcript show: ('La cantidad de elementos de la lista es ', (lista size) asStr
 
 "EJERCICIO 5"
 "Pasar un período expresado en segundos a un período expresado en días, horas, minutos y segundos." 
-"clase Smallinteger" 
+"Clase: Smallinteger - mathematical functions" 
 
 Solucion 1:
 obtenerPeriodo
@@ -310,7 +310,10 @@ dia:= (fecha copyFrom: 1 to: 2) asInteger. "saco el dia"
 "EJERCICIO 10"
 "Construir un método ‘longitudes’ tal que, dada una lista de cadenas, devuelva una lista de pares 
 ordenados que representen la ubicación de cada cadena y su longitud. Ej.: longitudes [‘este’, ‘es’, 
-‘el’, ‘ejemplo’, ‘sí?’]. Devolverá: [(1,4),(2,2),(3,2),(4,7),(5,3)]       (no pidio el profe este ejercicio)" 
+‘el’, ‘ejemplo’, ‘sí?’]. Devolverá: [(1,4),(2,2),(3,2),(4,7),(5,3)]       (no pidio el profe este ejercicio)"
+"para probar #('este' 'es' 'el' 'ejemplo' 'si?') longitudes" 
+"Clase: Array - Converting"
+
 longitudes
 | arreglo salida |
 
@@ -337,6 +340,7 @@ salida:= Array new: (arreglo size).
 iniciales de las palabras que empiezan con una consonante y con la última consonante. 
 Ej.: MetodoY [‘universidad’, ‘tecnológica’, ‘nacional’]. Devolverá: ‘DTNL’"
 "para probar si funciona #('universidad' 'tecnológica' 'nacional') convertirConsonante."
+"Clase: Array - Converting"
 
 convertirConsonante
 
