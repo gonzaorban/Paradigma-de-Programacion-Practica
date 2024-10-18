@@ -1,6 +1,8 @@
-“CLASE 09/10”
+TRABAJO PRACTICO 4
 
-“Realizar un método que devuelva si un número es primo o no. El método se debe llamar: esPrimo y devolver verdadero o falso.” 
+"CLASE 09/10"
+
+"Realizar un método que devuelva si un número es primo o no. El método se debe llamar: esPrimo y devolver verdadero o falso.” 
 “Clase: SmallInteger”
 esPrimo
 | primo divisor resto | 
@@ -36,8 +38,8 @@ nro at: 2 put: (nro at: 2) asInteger.
 
 
 
-“Dado un arreglo de números encontrar, realizar un método que encuentre el mayor valor y otro método que encuentre el menor valor. “
-“Clase: Array”
+"Dado un arreglo de números encontrar, realizar un método que encuentre el mayor valor y otro método que encuentre el menor valor."
+"Clase: Array"
 buscoMayor  
 | mayor |  
 mayor:= self at: 1. "tomo el primer elemento como mayor" 
@@ -53,6 +55,21 @@ mayor:= self at: 1. "tomo el primer elemento como mayor"
 ^mayor.
 
 
+"Dado un arreglo de números encontrar, realizar un método que encuentre el menor valor. #(20 38 13 1)"
+"Clase: Array"
+buscoMenor  
+| menor |  
+menor:= self at: 1. "tomo el primer elemento como menor" 
+"salteo la primer iteracion" 
+2 to: (self size) do: [ :i| 	 	
+	((self at: i) isNumber) ifTrue: [  		
+		((self at: i) < menor) ifTrue: [  			
+			menor:= self at: i. 			
+			]. 		
+		].  	
+		"si no es un numero, lo saltea" 	
+	]. 
+^menor.
 
 
 "CLASE 10/10"
@@ -103,6 +120,7 @@ Transcript show: ('La cantidad de elementos de la lista es ', (lista size) asStr
 
 "CLASE 16/10"
 
+"EJERCICIO 5"
 "Pasar un período expresado en segundos a un período expresado en días, horas, minutos y segundos." 
 "clase Smallinteger" 
 
@@ -168,6 +186,7 @@ periodo:= (dias asString, ' dias ', horas asString, ' horas ', minutos asString,
 
 
 
+"EJERCICIO 6"
 "Hacer un método que dada una fecha en formato DD/MM/AA, verifique si es correcta o errónea. Ej.: El 31/02/97 es una fecha errónea."
 verificarFecha
 | fecha meses año dia mes |
@@ -179,29 +198,21 @@ fecha:= self.
 
 "controlo que este bien ingresado el formato DD/MM/AA"
 1 to: (fecha size) do: [ :i|
-	
 	"pregunto por la posicion de la /"
 	((i = 3) or: (i = 6)) ifTrue: [ 
-			
 		"pregunta si no es la /"
-		((fecha at: i) ~= $/) ifTrue: [ 
-				
+		((fecha at: i) ~= $/) ifTrue: [ 	
 			^'Fecha ingresada es invalida'.
-			].
-			 
+			].	 
 		] 
-	
 	"tiene que venir un numero"
 	ifFalse: [ 
-		
 		"convierto el caracter a string y dps a numero"
 		(((fecha at: i) asString asInteger) isInteger) ifFalse: [ 
 			
 			^'Fecha ingresada es invalida'.
 			].
-		
-		].
-	
+		].	
 	].
 
 "controlo que sea un fecha existente"
@@ -296,6 +307,7 @@ dia:= (fecha copyFrom: 1 to: 2) asInteger. "saco el dia"
 
 
 
+"EJERCICIO 10"
 "Construir un método ‘longitudes’ tal que, dada una lista de cadenas, devuelva una lista de pares 
 ordenados que representen la ubicación de cada cadena y su longitud. Ej.: longitudes [‘este’, ‘es’, 
 ‘el’, ‘ejemplo’, ‘sí?’]. Devolverá: [(1,4),(2,2),(3,2),(4,7),(5,3)]       (no pidio el profe este ejercicio)" 
@@ -314,6 +326,62 @@ salida:= Array new: (arreglo size).
 1 to: (arreglo size) do: [ :i|
 	
 	salida at: i put: ('(', i asString, ',', ((arreglo at: i) size) asString, ')').
+	].
+
+^salida.
+
+
+
+"EJERCICIO 14"
+"Hacer un método que dado un conjunto de palabras, permita armar otra; esta se formará con las 
+iniciales de las palabras que empiezan con una consonante y con la última consonante. 
+Ej.: MetodoY [‘universidad’, ‘tecnológica’, ‘nacional’]. Devolverá: ‘DTNL’"
+"para probar si funciona #('universidad' 'tecnológica' 'nacional') convertirConsonante."
+
+convertirConsonante
+
+| arreglo vocales salida primerLetra ultimaLetra bandera |
+
+arreglo:= self.
+vocales:= #(A E I O U).
+salida:= ''.
+
+arreglo do: [ :c|
+	(c isString) ifFalse: [ 
+		^'Error, el arreglo no contiene solamente palabras'.
+		].
+	].
+
+1 to: (arreglo size) do: [ :i|
+	
+	bandera:= true. "reinicio"
+	"pregunto por la primera posicion"
+	primerLetra:= (arreglo at: i) at: 1.
+	vocales do: [ :c|
+		"convierto ambos a string, porque el elemento de vocales lo devuelve como ByteSymbol"
+		((primerLetra asUppercase asString) = (c asString)) ifTrue: [
+			"cuando sea vocal pongo bandera en falso" 
+			bandera:= false.
+			]. 
+		].
+	(bandera) ifTrue: [ 
+		salida:= (salida, primerLetra asUppercase asString).
+		].
+	
+	bandera:= true. "reinicio"
+	"pregunto por la ultima posicion"
+	ultimaLetra:= (arreglo at: i) at: ((arreglo at: i) size).
+	vocales do: [ :c|
+		"convierto ambos a string, porque el elemento de vocales lo devuelve como ByteSymbol"
+		((ultimaLetra asUppercase asString) = (c asString)) ifTrue: [ 
+			"cuando sea vocal pongo bandera en falso" 
+			bandera:= false.
+			]. 
+		].
+	(bandera) ifTrue: [ 
+		salida:= (salida, ultimaLetra asUppercase asString).
+		].
+	
 	].
 
 ^salida.
