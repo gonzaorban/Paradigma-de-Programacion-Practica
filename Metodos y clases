@@ -412,7 +412,9 @@ arreglo do: [ :c|
 
 salida:= Array new: 4.
 mayor:= (arreglo at: 1).
+posMayor:= 1.
 menor:= (arreglo at: 1).
+posMenor:= 1.
 
 "salteo la primer iteracion" 
 2 to: (arreglo size) do: [ :i| 	 	
