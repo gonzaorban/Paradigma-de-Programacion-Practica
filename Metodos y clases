@@ -465,3 +465,113 @@ salida at: 1 put: aux1.
 salida at: 2 put: aux2.
 
 ^salida.
+
+
+
+"CLASE 30/10"
+
+"EJERCICIO. Crear un archivo de texto en Pharo"
+| punteroArchivo dirTrabajo | 
+
+"punteroArchivo: es el nombre interno" 
+"ArchivoTexto_20241030.txt es el nombre externo" 
+
+"Consultar carpeta o directorio de trabajo" 
+dirTrabajo:=FileSystem disk workingDirectory. 
+
+Transcript show: dirTrabajo. 
+
+"Crear un archivo de texto" 
+"Proceso de Apertura, lo abro para escritura" 
+"Ejemplo de Creación: File @ C:\Users\Usuario\Documents\Pharo\images\Pharo 12.0 - 64bit (stable)" 
+
+punteroArchivo:= (dirTrabajo /'ArchivoTexto_20241030.txt') writeStream. 
+punteroArchivo nextPutAll:'esta es una linea de prueba desde pharo'; cr. 
+punteroArchivo nextPutAll:'segunda linea desde pharo'. 
+punteroArchivo close. 
+
+
+
+"EJERCICIO. Leer el contenido de un archivo creado."
+
+| punteroArchivo dirTrabajo linea | 
+
+"Leer un Archivo de Texto" 
+
+dirTrabajo:= FileSystem disk workingDirectory. 
+  
+"Abrimos el archivo para lectura. El archivo de existir" 
+"Ejemplo de Creación: File @ C:\Users\Usuario\Documents\Pharo\images\Pharo 12.0 - 64bit (stable)"
+"Debe estar dentro de la carpeta Pharo 12.0 - 64bit (stable)"
+punteroArchivo :=(dirTrabajo /'ArchivoTexto_20241030.txt') readStream.   
+
+linea:= punteroArchivo nextLine. 
+^linea. 
+
+
+
+"EJERCICIO. Crear y Recuperar el contenido de un archivo binario."
+| x arreglo | 
+
+arreglo:= Array new:5. 
+
+"Cargar el arreglo" 
+arreglo at: 1 put: 100. 
+arreglo at: 2 put: 200. 
+arreglo at: 3 put: 200. 
+arreglo at: 4 put: 200. 
+arreglo at: 5 put: 200. 
+
+"grabo el arreglo"
+'ArchivoBinario.bin' asFileReference ensureDelete binaryWriteStreamDo: [ :stream | 
+	stream nextPutAll: arreglo.
+	]. 
+
+
+"Recupero el contenido del archivo binario" 
+x:='ArchivoBinario.bin' asFileReference binaryReadStream upToEnd. 
+
+^x.
+
+
+
+
+| punteroArchivo dirTrabajo linea bandera codigo | 
+
+"Leer un Archivo de Texto" 
+
+dirTrabajo:= FileSystem disk workingDirectory. 
+  
+"Abrimos el archivo para lectura. El archivo de existir" 
+"Ejemplo de Creación: File @ C:\Users\Usuario\Documents\Pharo\images\Pharo 12.0 - 64bit (stable)"
+"Debe estar dentro de la carpeta Pharo 12.0 - 64bit (stable)"
+punteroArchivo :=(dirTrabajo /'Asignar codigo numerico.txt') readStream.   
+
+codigo:= 0. "inicializo"
+
+"atEnd pregunta cuando termine el archivo"
+[punteroArchivo atEnd not] whileTrue: [ 
+	
+	bandera:= false. "reinicio"
+	linea:= punteroArchivo nextLine. "guardo la linea a analizar"
+	codigo:= codigo + 1.
+	
+	[bandera = false] whileTrue: [ 
+		
+		linea do: [ :c| 
+			
+			(c = $ ) ifTrue: [ 
+				bandera:= true. "porque ya llego al espacio"
+				].
+			
+			punteroArchivo skip: 1. "avanzo una posicion de la linea"
+			].
+		
+		].
+	
+	punteroArchivo nextPutAll: ('00', codigo asString) ; cr.
+	Transcript show: linea ; cr.
+	
+	].
+
+punteroArchivo close. "cierro el archivo"
