@@ -479,13 +479,9 @@ salida at: 2 put: aux2.
 "Consultar carpeta o directorio de trabajo" 
 dirTrabajo:=FileSystem disk workingDirectory. 
 
-Transcript show: dirTrabajo. 
-
-"Crear un archivo de texto" 
-"Proceso de Apertura, lo abro para escritura" 
 "Ejemplo de Creación: File @ C:\Users\Usuario\Documents\Pharo\images\Pharo 12.0 - 64bit (stable)" 
 
-punteroArchivo:= (dirTrabajo /'ArchivoTexto_20241030.txt') writeStream. 
+punteroArchivo:= (dirTrabajo /'ArchivoTexto_20241030.txt') writeStream. "En este caso, crea un archivo con ese nombre"
 punteroArchivo nextPutAll:'esta es una linea de prueba desde pharo'; cr. 
 punteroArchivo nextPutAll:'segunda linea desde pharo'. 
 punteroArchivo close. 
@@ -535,43 +531,56 @@ x:='ArchivoBinario.bin' asFileReference binaryReadStream upToEnd.
 
 
 
+"EJERCICIO de Manejo de Archivo Tabulado 
+Dado el archivo que se adjunta en la carpeta: 'Asignar codigo numerico.txt'
+Asignar un código numérico por cada registro del archivo (incremental). Mostrar dicho registro en el transcript (con el código generado).
 
-| punteroArchivo dirTrabajo linea bandera codigo | 
+archivo original 
+ADP-LC-APC	ACC. F.O.FO MNET ACOPLADOR LC/APC SIMPLEX 
+ADP-SC-APC	ACC. F.O.FO MNET ACOPLADOR SC/APC SIMPLEX 
 
-"Leer un Archivo de Texto" 
+Salida 1 (tamaño fijo) 
+ADP-LC-APC	001	ACC. F.O.FO MNET ACOPLADOR LC/APC SIMPLEX 
+ADP-SC-APC	002	ACC. F.O.FO MNET ACOPLADOR SC/APC SIMPLEX 
+"
+| punteroEntrada dirTrabajo linea bandera codigo | 
 
 dirTrabajo:= FileSystem disk workingDirectory. 
   
 "Abrimos el archivo para lectura. El archivo de existir" 
 "Ejemplo de Creación: File @ C:\Users\Usuario\Documents\Pharo\images\Pharo 12.0 - 64bit (stable)"
 "Debe estar dentro de la carpeta Pharo 12.0 - 64bit (stable)"
-punteroArchivo :=(dirTrabajo /'Asignar codigo numerico.txt') readStream.   
+punteroEntrada:= (dirTrabajo /'Asignar codigo numerico.txt') readStream.
 
 codigo:= 0. "inicializo"
+Transcript show: (punteroEntrada nextLine) ; cr. "guardo y salteo primera linea"
 
 "atEnd pregunta cuando termine el archivo"
-[punteroArchivo atEnd not] whileTrue: [ 
+[punteroEntrada atEnd not] whileTrue: [ 
 	
 	bandera:= false. "reinicio"
-	linea:= punteroArchivo nextLine. "guardo la linea a analizar"
+	linea:= punteroEntrada nextLine. "guardo la linea a analizar"
 	codigo:= codigo + 1.
-	
-	[bandera = false] whileTrue: [ 
+
+	linea do: [ :c| 
 		
-		linea do: [ :c| 
-			
-			(c = $ ) ifTrue: [ 
-				bandera:= true. "porque ya llego al espacio"
-				].
-			
-			punteroArchivo skip: 1. "avanzo una posicion de la linea"
+		"pregunto por el tab no el espacio"	
+		((c = $	) and: (bandera = false)) ifTrue: [ 
+			bandera:= true. "para no volver a copiar"
+			Transcript show: (' 00', codigo asString , ' '). "inserto el codigo"
+			]
+		ifFalse: [ 
+			"copio el caracter como esta"
+			Transcript show: c.
 			].
-		
-		].
 	
-	punteroArchivo nextPutAll: ('00', codigo asString) ; cr.
-	Transcript show: linea ; cr.
+		].
+
+	Transcript cr. "salto de linea"
 	
 	].
 
-punteroArchivo close. "cierro el archivo"
+"presionar para ver el resultado: ctrl + O + T"
+
+
+
