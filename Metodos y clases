@@ -533,7 +533,7 @@ x:='ArchivoBinario.bin' asFileReference binaryReadStream upToEnd.
 
 "EJERCICIO de Manejo de Archivo Tabulado 
 Dado el archivo que se adjunta en la carpeta: 'Asignar codigo numerico.txt'
-Asignar un código numérico por cada registro del archivo (incremental). Mostrar dicho registro en el transcript (con el código generado).
+a) Asignar un código numérico por cada registro del archivo (incremental). Mostrar dicho registro en el transcript (con el código generado).
 
 archivo original 
 ADP-LC-APC	ACC. F.O.FO MNET ACOPLADOR LC/APC SIMPLEX 
@@ -604,7 +604,7 @@ dirTrabajo:= FileSystem disk workingDirectory.
 "Ejemplo de Creación: File @ C:\Users\Usuario\Documents\Pharo\images\Pharo 12.0 - 64bit (stable)"
 "Debe estar dentro de la carpeta Pharo 12.0 - 64bit (stable)"
 punteroEntrada:= (dirTrabajo /'Asignar codigo numerico.txt') readStream.
-punteroSalida:= (dirTrabajo /'Archivo salida.txt') writeStream.
+punteroSalida:= (dirTrabajo /'Archivo salida.txt') writeStream. "creo un archivo desde cero"
 
 codigo:= 0. "inicializo"
 punteroSalida cr. "salteo la primera linea"
@@ -624,7 +624,7 @@ punteroSalida cr. "salteo la primera linea"
 			]
 		ifFalse: [ 
 			"copio el caracter como esta"
-			punteroSalida nextPutAll: (c asString).
+			punteroSalida nextPutAll: (c asString). "pasarlo a string es obligatorio sino tira error"
 			].
 	
 		].
