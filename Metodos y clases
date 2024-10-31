@@ -620,7 +620,7 @@ punteroEntrada:= (dirTrabajo /'Asignar codigo numerico.txt') readStream.
 punteroSalida:= (dirTrabajo /'Archivo salida.txt') writeStream. "creo un archivo desde cero"
 
 codigo:= 0. "inicializo"
-punteroSalida cr. "salteo la primera linea"
+punteroSalida nextPutAll: (punteroEntrada nextLine) ; cr.
 
 "atEnd pregunta cuando termine el archivo"
 [punteroEntrada atEnd not] whileTrue: [ 
