@@ -666,6 +666,13 @@ punteroSalida close. "cierro el archivo por ser de escritura"
 "CLASE 31/10"
 
 "EJERCICIO. 
+Generar una o mas clases que permitan parsear archivos. 
+Ejercicio 1: implementar una clase que tenga por lo menos un método setter llamado archivo, un método getter llamado archivo (es el nombre del atributo archivo). 
+El atributo archivo debe contener el nombre del archivo a procesar. 
+Se debe implementar también un método parser que va a ser la interfaz con el usuario, el cual va a realizar el proceso del archivo, según el formato que sea indicado. 
+Archivo de formato y archivo de datos: Ejercicio - Clase 31-10-2024 
+Se puede utilizar otros métodos para usos privados 
+
 El nombre del archivo de retenciones que contienen los datos a importar debe tener formato texto y con el siguiente diseño: Retxx­xxxxxxxx­xYYmmaaaa.txt,es decir: la palabra Ret, la C.U.I.T. del
 agente, dos dígitos para la dependencia solo si corresponde, y el período fiscal; dos dígitos de mes y cuatro de año. Por Ejemplo:
 Ret20­24341851­200112015.txt. ­ Ejemplo de nombre de archivo con dependencia 00 ­
