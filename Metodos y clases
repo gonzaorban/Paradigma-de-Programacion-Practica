@@ -660,3 +660,50 @@ punteroSalida nextPutAll: (punteroEntrada nextLine) ; cr.
 	].
 
 punteroSalida close. "cierro el archivo por ser de escritura"
+
+
+
+"CLASE 31/10"
+
+"EJERCICIO. Consigna"
+"FALTA TERMINAR"
+| punteroEntrada punteroSalida dirTrabajo linea arreglo | 
+
+dirTrabajo:= FileSystem disk workingDirectory. 
+  
+"Abrimos el archivo para lectura. El archivo de existir" 
+"Ejemplo de Creación: File @ C:\Users\Usuario\Documents\Pharo\images\Pharo 12.0 - 64bit (stable)"
+"Debe estar dentro de la carpeta Pharo 12.0 - 64bit (stable)"
+punteroEntrada:= (dirTrabajo /'ejemplo.txt') readStream.
+punteroSalida:= (dirTrabajo /'Archivo salida.txt') writeStream. "creo un archivo desde cero"
+
+
+[punteroEntrada atEnd not] whileTrue: [
+	
+	linea:= punteroEntrada nextLine. "obtengo la linea"
+	arreglo:= linea substrings. "lo convierto en un arrelgo de strings"
+	
+	punteroSalida nextPutAll: ('Ret').
+	
+	"copio los primeros dos numeros del cuit"
+	1 to: 2 do: [ :i|
+		
+		punteroSalida nextPutAll: ((arreglo at: 1) at: i).
+		
+		].
+	
+	punteroSalida nextPutAll: '-'.
+	
+	"copio los 8 numeros del cuit que serian el DNI"
+	3 to: 10 do: [ :i|
+		
+		punteroSalida nextPutAll: ((arreglo at: 1) at: i).
+		
+		].
+	
+	punteroSalida nextPutAll: '-'.
+	
+	punteroSalida nextPutAll: ((arreglo at: 1) at: 11).
+	
+	].
+
