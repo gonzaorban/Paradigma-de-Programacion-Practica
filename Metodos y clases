@@ -665,7 +665,12 @@ punteroSalida close. "cierro el archivo por ser de escritura"
 
 "CLASE 31/10"
 
-"EJERCICIO. Consigna"
+"EJERCICIO. 
+El nombre del archivo de retenciones que contienen los datos a importar debe tener formato texto y con el siguiente diseño: Retxx­xxxxxxxx­xYYmmaaaa.txt,es decir: la palabra Ret, la C.U.I.T. del
+agente, dos dígitos para la dependencia solo si corresponde, y el período fiscal; dos dígitos de mes y cuatro de año. Por Ejemplo:
+Ret20­24341851­200112015.txt. ­ Ejemplo de nombre de archivo con dependencia 00 ­
+Ret20­24341851­2112015.txt ­ Ejemplo de nombre de archivo sin dependencia
+"
 "FALTA TERMINAR"
 | punteroEntrada punteroSalida dirTrabajo linea arreglo | 
 
