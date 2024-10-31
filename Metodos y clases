@@ -566,8 +566,21 @@ Transcript show: (punteroEntrada nextLine) ; cr. "guardo y salteo primera linea"
 		
 		"pregunto por el tab no el espacio"	
 		((c = $	) and: (bandera = false)) ifTrue: [ 
+
 			bandera:= true. "para no volver a copiar"
-			Transcript show: (' 00', codigo asString , ' '). "inserto el codigo"
+			(codigo < 10) ifTrue: [ 
+				Transcript show: (' 00', codigo asString , ' '). "inserto el codigo"
+				]
+			ifFalse: [ 
+				(codigo < 100) ifTrue: [ 
+					Transcript show: (' 0', codigo asString , ' '). "inserto el codigo"
+					]
+				ifFalse: [ 
+					"cuando sea mayor a 100"
+					Transcript show: (' ', codigo asString , ' '). "inserto el codigo"
+					].
+				].
+
 			]
 		ifFalse: [ 
 			"copio el caracter como esta"
@@ -619,8 +632,21 @@ punteroSalida cr. "salteo la primera linea"
 	linea do: [ :c| 
 			
 		((c = $	) and: (bandera = false)) ifTrue: [ 
+				
 			bandera:= true. "para no volver a copiar"
-			punteroSalida nextPutAll: (' 00', codigo asString , ' '). "inserto el codigo"
+			(codigo < 10) ifTrue: [ 
+				punteroSalida nextPutAll: (' 00', codigo asString , ' '). "inserto el codigo"
+				]
+			ifFalse: [ 
+				(codigo < 100) ifTrue: [ 
+					punteroSalida nextPutAll: (' 0', codigo asString , ' '). "inserto el codigo"
+					]
+				ifFalse: [ 
+					"cuando sea mayor a 100"
+					punteroSalida nextPutAll: (' ', codigo asString , ' '). "inserto el codigo"
+					].
+				].
+			
 			]
 		ifFalse: [ 
 			"copio el caracter como esta"
