@@ -678,8 +678,9 @@ agente, dos dígitos para la dependencia solo si corresponde, y el período fisc
 Ret20­24341851­200112015.txt. ­ Ejemplo de nombre de archivo con dependencia 00 ­
 Ret20­24341851­2112015.txt ­ Ejemplo de nombre de archivo sin dependencia
 "
+
 "FALTA TERMINAR"
-| punteroEntrada punteroSalida dirTrabajo linea arreglo | 
+| punteroEntrada punteroSalida dirTrabajo nombreArch linea  | 
 
 dirTrabajo:= FileSystem disk workingDirectory. 
   
@@ -687,35 +688,50 @@ dirTrabajo:= FileSystem disk workingDirectory.
 "Ejemplo de Creación: File @ C:\Users\Usuario\Documents\Pharo\images\Pharo 12.0 - 64bit (stable)"
 "Debe estar dentro de la carpeta Pharo 12.0 - 64bit (stable)"
 punteroEntrada:= (dirTrabajo /'ejemplo.txt') readStream.
-punteroSalida:= (dirTrabajo /'Archivo salida.txt') writeStream. "creo un archivo desde cero"
+
+
+"busco y genero el nombre del archivo de salida"
+linea:= punteroEntrada nextLine. "obtengo la primer linea"
+
+nombreArch= 'Ret'. "inicializo"
+
+"copio los primeros dos numeros del cuit"
+1 to: 2 do: [ :i|
+nombreArch:= (nombreArch,(linea at: i) asString).
+].
+
+punteroSalida nextPutAll: '-'.
+
+"copio los 8 numeros del cuit que serian el DNI"
+3 to: 10 do: [ :i|
+nombreArch:= (nombreArch,(linea at: i) asString).
+].
+
+punteroSalida nextPutAll: '-'.
+
+"copio el ultimo numero del cuit"
+nombreArch:= (nombreArch,(linea at: 11) asString).
+
+"evaluo si es con o sin dependencia"
+((linea at: 157) = 0) ifTrue: [
+
+((linea at: 158) = 0) ifTrue: [
+"solo va a entrar aca cuando sea 00 osea con dependencia"
+nombreArch:= (nombreArch,'00').
+].
+].
+
+"obtengo fecha (mes y año)"
+113 to: 118 do: [ :i|
+nombreArch:= (nombreArch,(linea at: i) asString).
+].
+
+nombreArch:= (nombreArch,'.txt').
+punteroSalida:= (dirTrabajo/nombreArch) writeStream. "creo un archivo desde cero"
+
 
 
 [punteroEntrada atEnd not] whileTrue: [
-	
-	linea:= punteroEntrada nextLine. "obtengo la linea"
-	arreglo:= linea substrings. "lo convierto en un arrelgo de strings"
-	
-	punteroSalida nextPutAll: ('Ret').
-	
-	"copio los primeros dos numeros del cuit"
-	1 to: 2 do: [ :i|
-		
-		punteroSalida nextPutAll: ((arreglo at: 1) at: i).
-		
-		].
-	
-	punteroSalida nextPutAll: '-'.
-	
-	"copio los 8 numeros del cuit que serian el DNI"
-	3 to: 10 do: [ :i|
-		
-		punteroSalida nextPutAll: ((arreglo at: 1) at: i).
-		
-		].
-	
-	punteroSalida nextPutAll: '-'.
-	
-	punteroSalida nextPutAll: ((arreglo at: 1) at: 11).
 	
 	].
 
